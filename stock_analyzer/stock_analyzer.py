@@ -84,6 +84,31 @@ def main():
         print("--- 📉 3-Day Simple Moving Average ---")
         for i, sma_val in enumerate(sma_3):
             print(f"Days {int(days[i])}-{int(days[i+window_size-1])} Average: ${sma_val:.2f}")
+
+    # 7. Beginner Profit Calculator 💰
+    # Uses simple math on the arrays we already have to simulate a real-world scenario
+    shares = 100
+    buy_price = close_prices[0]   # Price on the first day
+    sell_price = close_prices[-1]  # Price on the last day
+    
+    total_investment = buy_price * shares
+    final_value = sell_price * shares
+    profit = final_value - total_investment
+    
+    # Calculate percentage return on investment (ROI)
+    roi_percentage = (profit / total_investment) * 100
+    
+    print("\n--- 💰 Simple Profit Calculator ---")
+    print(f"Simulating buying {shares} shares on Day {int(days[0])} and selling on Day {int(days[-1])}")
+    print(f"Total Investment:   ${total_investment:.2f}")
+    print(f"Final Value:        ${final_value:.2f}")
+    
+    if profit > 0:
+        print(f"Total Profit:       +${profit:.2f} 🤑")
+    else:
+        print(f"Total Loss:         ${profit:.2f} 📉")
+        
+    print(f"Return on Invest.:  {roi_percentage:+.2f}%")
             
     print("\n" + "="*45)
 
