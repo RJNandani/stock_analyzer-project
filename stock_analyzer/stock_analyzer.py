@@ -110,6 +110,51 @@ def main():
         
     print(f"Return on Invest.:  {roi_percentage:+.2f}%")
             
+    # 8. Performance Rating 🌟
+    # Calculate a score out of 10 based on simple logical conditions
+    score = 5  # Start with an average score of 5
+    if roi_percentage > 0:
+        score += 2   # Reward for being profitable overall
+    elif roi_percentage < 0:
+        score -= 2   # Penalize for losing money
+        
+    if std_close < 3:
+        score += 2   # Reward for low volatility (steady growth)
+    if daily_returns[best_day_idx] > 2:
+        score += 1   # Reward for having a really good single day
+
+    # Ensure score stays between 0 and 10 using built-in min and max functions
+    score = max(0, min(10, score))
+    
+    print("\n--- 🌟 Performance Rating ---")
+    print(f"Stock Rating: {score}/10")
+    if score >= 8:
+        print("Verdict: Strong Buy! 🚀")
+    elif score >= 5:
+        print("Verdict: Hold/Moderate. ⚖️")
+    else:
+        print("Verdict: Risky/Weak. ⚠️")
+
+    # 9. Price Alert System 🚨
+    # Introduces 'Boolean Indexing' - A powerful NumPy feature to filter arrays!
+    target_price = 158.00  # Set an arbitrary target price
+    
+    # Condition: close_prices >= target_price
+    # This creates a completely new array filled with True/False.
+    # Ex: [False, False, False, True, True, False]
+    
+    # We pass it into `days` to get ONLY the days where the condition was True
+    alert_days = days[close_prices >= target_price]
+    
+    print(f"\n--- 🚨 Price Alert System (Target: ${target_price:.2f}) ---")
+    if len(alert_days) > 0:
+        print(f"Alert! The stock crossed your target price on {len(alert_days)} day(s):")
+        for day in alert_days:
+            # We use `int()` to avoid printing floating decimals like Day 5.0
+            print(f" -> Day {int(day)}")
+    else:
+        print("The stock never reached the target price.")
+
     print("\n" + "="*45)
 
 if __name__ == "__main__":
